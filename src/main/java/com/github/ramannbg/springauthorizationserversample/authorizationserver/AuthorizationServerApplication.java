@@ -28,10 +28,18 @@ public class AuthorizationServerApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		if (clientRepository.findByClientId("first-client").isEmpty()) {
 			Set<String> grantTypes = new HashSet<>();
+			grantTypes.add("code");
+			grantTypes.add("id_token");
 			grantTypes.add("authorization_code");
 
 			Set<String> redirectUris = new HashSet<>();
-			redirectUris.add("http://localhost:3000");
+			redirectUris.add("http://localhost:4200/index.html");
+			redirectUris.add("http://localhost:4200/silent-refresh.html");
+
+			Set<String> scopes = new HashSet<>();
+			scopes.add("openid");
+			scopes.add("email");
+			scopes.add("profile");
 
 			Client client = new Client();
 			client.setClientId("first-client");
@@ -40,6 +48,7 @@ public class AuthorizationServerApplication implements CommandLineRunner {
 			client.setDescription("The first client");
 			client.setRegisteredAt(new Date());
 			client.setRegisteredRedirectUri(redirectUris);
+			client.setScopes(scopes);
 
 			clientRepository.insert(client);
 		}

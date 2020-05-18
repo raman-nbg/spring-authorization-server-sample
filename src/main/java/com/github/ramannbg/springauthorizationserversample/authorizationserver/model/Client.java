@@ -25,6 +25,7 @@ public class Client implements ClientDetails {
     @Indexed(unique = true)
     private String clientId;
     private String clientSecret;
+    private Set<String> scopes;
     private Set<String> authorizedGrantTypes;
     private Set<String> registeredRedirectUri;
     private Date registeredAt;
@@ -65,10 +66,11 @@ public class Client implements ClientDetails {
 
     @Override
     public Set<String> getScope() {
-        HashSet<String> scopes = new HashSet<>();
-        scopes.add("all");
-
         return scopes;
+    }
+
+    public void setScopes(Set<String> scopes) {
+        this.scopes = scopes;
     }
 
     @Override
